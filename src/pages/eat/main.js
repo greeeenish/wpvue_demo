@@ -9,9 +9,6 @@ export default {
     usingComponents: {
       'i-button': '../../../iview/button/index',
       'i-message': '../../../iview/message/index',
-
-      'i-tab-bar': '../../../iview/tab-bar/index',
-      'i-tab-bar-item': '../../../iview/tab-bar-item/index',
     }
   }
 }

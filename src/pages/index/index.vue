@@ -1,105 +1,92 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container">
+    <!--<textarea class='input_area' id="input" @input="changeInput"/>-->
+    <!--<i-button class="confirm_button" type="my" @click="addCard">确定</i-button>-->
+    <!--<i-message id="message" />-->
+    <eat></eat>
 
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <i-tab-bar :current="current" color="#fadf73" class="navigate" @change="handleChange">
+      <i-tab-bar-item key="homepage" icon="homepage" current-icon="homepage_fill" title="首页"></i-tab-bar-item>
+      <i-tab-bar-item key="group" icon="group" current-icon="group_fill" title="朋友"></i-tab-bar-item>
+      <i-tab-bar-item key="remind" icon="remind" current-icon="remind_fill" title="通知"></i-tab-bar-item>
+      <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" title="我的"></i-tab-bar-item>
+    </i-tab-bar>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
+import store from '@/pages/counter/store.js'
+import eat from '@/pages/eat/index'
+
+const { $Message } = require('../../../dist/iview/base/index');
+
 
 export default {
   data () {
     return {
-      motto: 'Hello World',
-      userInfo: {}
+      value: '',
+      current: 'homepage'
     }
   },
 
   components: {
-    card
+    eat
   },
 
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+    handleChange(event) {
+      this.current = event.target.key
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
+
+    addCard () {
+      //输入是否为空
+      if(this.value===''){
+        $Message({
+          content: '输入不能为空',
+          type: 'error'
+        });
+        return
+      }
+
+      // 页面跳转
+      store.commit('setValue',this.value)
+      let url = '../counter/main'
+      wx.navigateTo({url})
     },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    changeInput (event) {
+      let value = event.target.value.replace(/(^\s*)|(\s*$)/g, '').split('\n').join('/')
+      this.value = value
+      console.log(value)
+    },
+    handleChange(event) {
+      this.current = event.target.key
     }
   },
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
   }
 }
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .i-btn-my {
+    color:#4a4a4a!important;
+    background:#fadf73!important;
+    border-radius: 4px !important;
+  }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
+  .confirm_button {
+    margin-top: 1rem;
+    width: 100%;
+    height: 10%;
+    border-radius: 4px !important;
+  }
 
-.userinfo-nickname {
-  color: #aaa;
-}
+  .input_area {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+  }
 
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-}
 </style>
