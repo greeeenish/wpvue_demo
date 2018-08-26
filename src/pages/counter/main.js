@@ -7,8 +7,6 @@ app.$mount()
 export default {
   config: {
     usingComponents: {
-      'i-button': '../../../iview/button/index',
-      'i-card': '../../../iview/card/index',
     }
   }
 }

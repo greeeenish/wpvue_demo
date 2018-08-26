@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <textarea class='input_area' id="input" @input="changeInput"/>
+    <textarea class='input_area' v-model="value" @input="changeInput"/>
     <i-button class="confirm_button" type="my" @click="addCard">确定</i-button>
     <i-message id="message" />
   </div>
@@ -9,12 +9,13 @@
 <script>
   import store from '@/pages/counter/store.js'
 
-  const { $Message } = require('../../../dist/iview/base/index');
+  const { $Message } = require('../../../static/iview/base/index');
 
   export default {
     data () {
       return {
         value: '',
+        result: '',
       }
     },
 
@@ -32,22 +33,19 @@
         }
 
         // 页面跳转
-        store.commit('setValue',this.value)
+        store.commit('setValue',this.result)
         let url = '../counter/main'
         wx.navigateTo({url})
       },
       changeInput (event) {
-        let value = event.target.value.replace(/(^\s*)|(\s*$)/g, '').split('\n').join('/')
-        this.value = value
-        console.log(value)
+        let result = event.target.value.replace(/(^\s*)|(\s*$)/g, '').split('\n').join('/')
+        this.result = result
+        this.value = event.target.value
       },
-      handleChange(event) {
-        this.current = event.target.key
-      }
     },
 
-    created () {
-      // 调用应用实例的方法获取全局数据
+    mounted () {
+      this.value = ''
     }
   }
 </script>
