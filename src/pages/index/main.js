@@ -9,6 +9,7 @@ export default {
     usingComponents: {
       'i-tab-bar': '../../static/iview/tab-bar/index',
       'i-tab-bar-item': '../../static/iview/tab-bar-item/index',
+      'i-avatar': '../../static/iview/avatar/index',
 
       'i-button': '../../static/iview/button/index',
       'i-message': '/../../static/iview/message/index',
@@ -20,7 +21,7 @@ export default {
       "i-grid-icon": "/../../static/iview/grid-icon/index",
       "i-row": "/../../static/iview/row/index",
       "i-col": "/../../static/iview/col/index",
-      "i-modal": "/../../static/iview/modal/index"
+      "i-modal": "/../../static/iview/modal/index",
     }
   }
 }

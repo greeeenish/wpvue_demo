@@ -76,14 +76,19 @@ export default {
 
 <style>
   .container {
-    justify-content: start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
   .flip {
-    width: 95%;
-    height: 3rem;
+    width: 25%;
+    height: 1.8rem;
     position: relative;
-    margin: 3%;
+    margin: 4%;
+    line-height: 1.8rem;
+
   }
 
   .flip div {

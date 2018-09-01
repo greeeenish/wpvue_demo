@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+
+    <!--用户信息-->
+    <div v-if="userinfo" class="userinfo">
+      <i-avatar shape="circle" size="mysize"><open-data type="userAvatarUrl"></open-data></i-avatar>
+      <span class="username">你来啦，<open-data type="userNickName"></open-data></span>
+    </div>
+
     <!--吃饭-->
     <eat v-if="iseat"></eat>
     <!--天气-->
@@ -21,6 +28,7 @@ export default {
   data () {
     return {
       current: 'homepage',
+      userinfo: true,
     }
   },
   computed: {
@@ -39,39 +47,44 @@ export default {
   methods: {
     handleChange(event) {
       this.current = event.target.key
+      this.userinfo = false
     },
   },
 
-  created () {
-    // 调用应用实例的方法获取全局数据
+  onLoad () {
+
   }
 }
 </script>
 
 <style scoped>
+  .container {
+    display: flex;
+    align-items: center;
+  }
+
   .navigate {
     width: 100%;
     position: fixed;
     bottom: 0;
   }
 
-  .i-btn-my {
-    color:#4a4a4a!important;
-    background:#fadf73!important;
-    border-radius: 4px !important;
+  .userinfo {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .username {
+    color: #4a4a4a;
+    margin-top: 0.3rem;
   }
 
-  .confirm_button {
-    margin-top: 1rem;
-    width: 100%;
-    height: 10%;
-    border-radius: 4px !important;
-  }
 
-  .input_area {
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 4px;
-  }
+
 
 </style>
